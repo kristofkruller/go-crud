@@ -7,10 +7,10 @@ import (
 
 var RegisterStoreRoutes = func(router *mux.Router) {
 
-	router.HandleFunc("/movies", controllers.getMovies).Methods("GET")
-	router.HandleFunc("/movies/{id}", getMovie).Methods("GET")
-	router.HandleFunc("/movies", createMovie).Methods("POST")
-	router.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
-	router.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
+	router.HandleFunc("/products", controllers.getProducts).Methods("GET")
+	router.HandleFunc("/products/{id}", getProduct).Methods("GET")
+	router.HandleFunc("/products", createProduct).Methods("POST")
+	router.HandleFunc("/products/{id}", updateProduct).Methods("PUT")
+	router.HandleFunc("/products/{id}", deleteProduct).Methods("DELETE")
 
 }

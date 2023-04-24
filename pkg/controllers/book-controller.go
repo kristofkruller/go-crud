@@ -8,70 +8,64 @@ import (
 	"strconv"
 )
 
-type Movie struct {
-	ID       string    `json:"id"`
-	Isbn     string    `json:"isbn"`
-	Title    string    `json:"title"`
-	Director *Director `json:"director"`
+type Product struct {
+	ID    string `json:"id"`
+	Isbn  string `json:"isbn"`
+	Title string `json:"title"`
 }
 
-type Director struct {
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-}
-
-var movies []Movie
+var products []Product
 
 // CRUD functions
 
-func getMovies(res http.ResponseWriter, req *http.Request) {
+func getProducts(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(res).Encode(movies)
+	json.NewEncoder(res).Encode(products)
 }
 
-func getMovie(res http.ResponseWriter, req *http.Request) {
+func getProduct(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(req)
-	for _, mov := range movies {
-		if mov.ID == params["id"] {
-			json.NewEncoder(res).Encode(mov)
+	for _, prod := range products {
+		if prod.ID == params["id"] {
+			json.NewEncoder(res).Encode(prod)
 			return
 		}
 	}
 }
 
-func deleteMovie(res http.ResponseWriter, req *http.Request) {
+func deleteProduct(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(req)
-	for idx, mov := range movies {
-		if mov.ID == params["id"] {
-			movies = append(movies[:idx], movies[idx+1:]...)
+	for idx, prod := range products {
+		if prod.ID == params["id"] {
+			products = append(products[:idx], products[idx+1:]...)
 			break
 		}
 	}
-	json.NewEncoder(res).Encode(movies)
+	json.NewEncoder(res).Encode(products)
 }
 
-func createMovie(res http.ResponseWriter, req *http.Request) {
+func createProduct(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "application/json")
-	var movie Movie
-	_ = json.NewDecoder(req.Body).Decode(&movie)
-	movie.ID = strconv.Itoa(rand.Intn(10000000000))
-	movies = append(movies, movie)
-	json.NewEncoder(res).Encode(movie)
+	var product Product
+	_ = json.NewDecoder(req.Body).Decode(&product)
+	product.ID = strconv.Itoa(rand.Intn(10000000000))
+	products = append(products, product)
+	json.NewEncoder(res).Encode(product)
 }
 
-func updateMovie(res http.ResponseWriter, req *http.Request) {
+func updateProduct(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "application/json")
 	params := mux.Vars(req)
-	for idx, mov := range movies {
-		if mov.ID == params["id"] {
-			movies = append(movies[:idx], movies[idx+1:]...)
-			var movie Movie
-			_ = json.NewDecoder(req.Body).Decode(&movie)
-			movie.ID = params["id"]
-			movies = append(movies, movie)
-			json.NewEncoder(res).Encode(movie)
+	for idx, prod := range products {
+		if prod.ID == params["id"] {
+			products = append(products[:idx], products[idx+1:]...)
+			var product Product
+			_ = json.NewDecoder(req.Body).Decode(&product)
+			product.ID = params["id"]
+			products = append(products, product)
+			json.NewEncoder(res).Encode(product)
 			return
 		}
 	}

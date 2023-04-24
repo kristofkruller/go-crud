@@ -1,10 +1,8 @@
-package main
+package controllers
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gorilla/mux"
-	"log"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -77,19 +75,5 @@ func updateMovie(res http.ResponseWriter, req *http.Request) {
 			return
 		}
 	}
-
-}
-
-func main() {
-	router := mux.NewRouter()
-
-	router.HandleFunc("/movies", getMovies).Methods("GET")
-	router.HandleFunc("/movies/{id}", getMovie).Methods("GET")
-	router.HandleFunc("/movies", createMovie).Methods("POST")
-	router.HandleFunc("/movies/{id}", updateMovie).Methods("PUT")
-	router.HandleFunc("/movies/{id}", deleteMovie).Methods("DELETE")
-
-	fmt.Printf("Starting serv at port 8000\n")
-	log.Fatal(http.ListenAndServe("8000", router))
 
 }
